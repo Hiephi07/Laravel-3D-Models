@@ -1,0 +1,17 @@
+.list-group-item {
+    border-radius: 0 !important;
+    /* Đặt border-radius bằng 0 để viền vuông */
+}
+
+.bd-callout {
+    padding: 1.25rem;
+    border-top: 2px solid #E7E9EB;
+    border-right: 2px solid #E7E9EB;
+    border-bottom: 2px solid #E7E9EB;
+    border-left: 0.5rem solid #8dc572;
+}
+
+.table-container {
+    max-height: 256px;   /* Chiều cao cố định */
+    overflow-y: auto;    /* Kích hoạt cuộn dọc */
+}

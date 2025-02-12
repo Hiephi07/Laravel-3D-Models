@@ -1,0 +1,41 @@
+.carousel img {
+    height: 400px;
+    object-fit: cover;
+}
+
+.related-products img {
+    height: 150px;
+    object-fit: cover;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 480px;
+}
+
+/* Style cho các ảnh con */
+.thumbnail-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.thumbnail-container img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+    margin: 0 5px;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.thumbnail-container img:hover {
+    border-color: #007bff;
+    /* Màu khi hover */
+}
+
+.thumbnail-container .active-thumbnail {
+    border-color: #007bff;
+    /* Màu khi ảnh con được chọn */
+}
