@@ -14,6 +14,29 @@ class AuthController extends Controller
         return view('frontend.auth.login');
     }
 
+    public function handleLogin(Request $req) {
+        $validator = Validator::make($req->all(), [
+            'email' => 'required|email',
+            'password' => 'required'
+        ], [
+            'email.required' => 'Email là bắt buộc',
+            'email.email' => 'Email không đúng định dạng',
+            'password.required' => 'Password là bắt buộc'
+        ]);
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            if(Auth::attempt(['email' => $req->email, 'password' => $req->password])) {
+                return redirect()->route('home');
+            } else {
+                return redirect()->back()->withInput()->with([
+                    'msg' => 'Tài khoản hoặc mật khẩu không đúng',
+                    'alert-type' => 'danger'
+                ]);
+            }
+        }
+    }
+
     public function register() {
         return view('frontend.auth.register');
     }
@@ -43,5 +66,10 @@ class AuthController extends Controller
                 'alert-type' => 'success'
             ]);
         }
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect()->route('login');
     }
 }
