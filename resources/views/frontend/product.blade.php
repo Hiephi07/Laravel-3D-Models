@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item"><a href="#">3D Models</a></li>
                     <li class="breadcrumb-item"><a href="#">Furniture</a></li>
                     <li class="breadcrumb-item"><a href="#">Chair</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Armchair Renmi 3D model</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{$product->title}}</li>
                 </ol>
             </nav>
 
@@ -23,15 +23,15 @@
                 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="https://media.designconnected.com/vfs/84268a1046e0d20d8d1f07434facf204_1/d2e93ea08d77b5ef9b02a2b753d80bb7.jpg"
+                            <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
                                 height="640px" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                            <img src="https://media.designconnected.com/vfs/31b31f6d310a071edae7a02b86f85253_1/a6800ab0b69fabe650a0be9fe86eaf09.jpg"
+                            <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
                                 class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                            <img src="https://media.designconnected.com/vfs/311fdd07965aad7ba7c0a40ddcc64d24_1/63d84447c6a22938024f630b2fa99d4a.jpg"
+                            <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
                                 class="d-block w-100" alt="...">
                         </div>
                     </div>
@@ -49,12 +49,12 @@
 
                 <!-- Các ảnh con bên dưới -->
                 <div class="thumbnail-container">
-                    <img src="https://media.designconnected.com/vfs/84268a1046e0d20d8d1f07434facf204_1/d2e93ea08d77b5ef9b02a2b753d80bb7.jpg"
+                    <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
                         alt="Thumbnail 1" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
                         class="thumbnail active-thumbnail">
-                    <img src="https://media.designconnected.com/vfs/31b31f6d310a071edae7a02b86f85253_1/a6800ab0b69fabe650a0be9fe86eaf09.jpg"
+                    <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
                         alt="Thumbnail 2" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" class="thumbnail">
-                    <img src="https://media.designconnected.com/vfs/311fdd07965aad7ba7c0a40ddcc64d24_1/63d84447c6a22938024f630b2fa99d4a.jpg"
+                    <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
                         alt="Thumbnail 3" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" class="thumbnail">
                 </div>
 
@@ -80,19 +80,7 @@
                             <h5 class="mb-4">Description</h5>
 
                             <!-- Additional Services -->
-                            <h6>Additional Services</h6>
-                            <p>
-                                If you purchase our model, we provide the following customization services at a reasonable
-                                fee,
-                                allowing you to access our team of top-notch artists for exclusive customizations. Let our
-                                extensive
-                                years of creative experience enhance your ideas and make your work even more captivating.
-                            </p>
-                            <ul>
-                                <li>$200–$900: Customize a character animation for less than 4 seconds.</li>
-                                <li>$150: Convert the character to UE5 format, including model, textures, hair, rigging
-                                    controllers, and animations.</li>
-                            </ul>
+                            <p>{{$product->description}}</p>
 
                             <!-- Introduction -->
                             <h6>Introduction</h6>
@@ -176,8 +164,8 @@
             <!-- Right Column: Product Details -->
             <div class="col-md-3">
                 <div class="border p-3 mb-3">
-                    <h4>Armchair Rand 3D Model</h4>
-                    <p class="text-success h4 my-4">$28.00 <del class="text-muted">$33.00</del></p>
+                    <h4>{{$product->title}}</h4>
+                    <p class="text-success h4 my-4">${{$product->price}} <del class="text-muted">$100</del></p>
                     <button class="btn btn-warning btn-lg w-100 my-3">Add to Cart</button>
                 </div>
 
@@ -185,9 +173,9 @@
                     <div class="info-card">
                         <!-- Creator Information -->
                         <div class="d-flex align-items-center mb-4">
-                            <img src="./images/50.png" class="rounded-circle me-3" alt="Creator Avatar">
+                            <img width="100" height="100" src="{{asset('storage/avatars/'. $product->user->metadata?->avatar)}}" class="rounded-circle me-3" alt="Creator Avatar">
                             <div>
-                                <h5 class="mb-0">GAN Studio</h5>
+                                <h5 class="mb-0">{{$product->user->name}}</h5>
                                 <p class="mb-0"><span class="rating">★★★★★</span> (3 reviews)</p>
                                 <small class="text-muted">Contributor Since 2016</small>
                             </div>
@@ -288,12 +276,13 @@
         <div class="mt-5">
             <h4 class="text-center mb-3">Related Products</h4>
             <div class="row related-products">
+                @foreach ($relatedProducts as $product)
                 <div class="col-md-2 mb-3">
                     <div class="product-card">
                         <div class="product-image m-4 position-relative">
-                            <img src="https://3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0008.jpg"
+                            <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
                                 class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
+                            <div class="badge text-bg-secondary" style="border-radius: 20%;">${{$product->price}}</div>
                             <div class="product-actions">
                                 <button class="btn btn-icon">
                                     <i class="far fa-heart"></i>
@@ -304,267 +293,14 @@
                             </div>
                         </div>
                         <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
+                            <h3 class="product-title h6 mb-1"><a class="text-decoration-none text-black" href="{{route('products.detail', $product->id)}}">{{$product->title}}</a></h3>
                             <div class="product-meta text-muted small">
                                 3DS MAX [+2]
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://cdn.3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0001.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0008.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://cdn.3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0001.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0008.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://cdn.3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0001.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0008.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://cdn.3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0001.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0008.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://cdn.3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0001.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0008.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="https://cdn.3dmodels.org/wp-content/uploads/Furniture/Alberta/003_Alberta_Celine_Sofa/Alberta_Celine_Sofa_1000_0001.jpg"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">$39</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1">Curtain</h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                @endforeach
                 <!-- Add more products -->
             </div>
         </div>

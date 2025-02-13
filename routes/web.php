@@ -31,7 +31,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/catalog', [CatalogController::class, 'catalog'])->name('catalog');
 
-Route::get('/product', [ProductController::class, 'products'])->name('products');
+Route::get('/products', [ProductController::class, 'products'])->name('products');
+
+Route::get('/products/{id}', [ProductController::class, 'productDetail'])->name('products.detail');
 
 Route::get('/author', [AuthorController::class, 'author']);
 
