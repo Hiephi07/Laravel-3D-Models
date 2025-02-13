@@ -105,38 +105,4 @@ class ProfileController extends Controller
         ]);
         
     }
-
-    public function changePassword(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'current_password' => 'required',
-            'new_password' => 'required|string|confirmed',
-        ], [
-            'current_password.required' => 'Vui lòng nhập mật khẩu hiện tại.',
-            'new_password.required' => 'Vui lòng nhập mật khẩu mới.',
-            'new_password.confirmed' => 'Mật khẩu xác nhận không khớp.',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }
-
-        $user = User::find(auth()->user()->id);
-
-        // Kiểm tra mật khẩu hiện tại
-        if (!Hash::check($request->current_password, $user->password)) {
-            return redirect()->back()->with([
-                'msg' => 'Mật khẩu hiện tại không chính xác!',
-                'alert-type' => 'danger'
-            ]);
-        }
-
-        // Cập nhật mật khẩu mới
-        $user->update(['password' => Hash::make($request->new_password)]);
-
-        return redirect()->back()->with([
-            'msg' => 'Mật khẩu đã được thay đổi thành công!',
-            'alert-type' => 'success'
-        ]);
-    }
 }

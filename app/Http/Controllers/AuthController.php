@@ -45,27 +45,35 @@ class AuthController extends Controller
         $validator = Validator::make($req->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required'
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).+$/'
+            ]
         ], [
             'name.required' => 'Name là bắt buộc',
             'email.required' => 'Email là bắt buộc',
             'email.unique' => 'Email đã tồn tại',
             'email.email' => 'Email không đúng định dạng',
-            'password.required' => 'Password là bắt buộc'
+            'password.required' => 'Password là bắt buộc',
+            'password.min' => 'Password phải có ít nhất 8 ký tự',
+            'password.regex' => 'Password phải chứa ít nhất 1 chữ hoa, 1 chữ thường và 1 ký tự đặc biệt'
         ]);
-        if($validator->fails()) {
+    
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        } else {
-            User::create([
-                'name' => $req->name,
-                'email' => $req->email,
-                'password' => Hash::make($req->password)
-            ]);
-            return redirect()->route('login')->with([
-                'msg' => 'Đăng ký thành công',
-                'alert-type' => 'success'
-            ]);
         }
+    
+        User::create([
+            'name' => $req->name,
+            'email' => $req->email,
+            'password' => Hash::make($req->password)
+        ]);
+    
+        return redirect()->route('login')->with([
+            'msg' => 'Đăng ký thành công',
+            'alert-type' => 'success'
+        ]);
     }
 
     public function logout() {

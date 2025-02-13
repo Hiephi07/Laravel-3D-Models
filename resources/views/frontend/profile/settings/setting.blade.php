@@ -21,7 +21,7 @@
         <!-- Sidebar -->
         <div class="col-md-2 sidebar text-white p-0" style="height: auto; background-color: #293541;">
             <div class="d-flex flex-column align-items-center my-5">
-                <img src="{{asset('storage/avatars/' . auth()->user()->metadata->avatar)}}" width="100" height="100" class="rounded-circle" alt="Creator Avatar">
+                <img src="{{asset('storage/avatars/' . auth()->user()->metadata?->avatar)}}" width="100" height="100" class="rounded-circle" alt="Creator Avatar">
                 <div>
                     <h5 class="my-3 text-center">{{auth()->user()->name}}</h5>
                 </div>
@@ -103,7 +103,7 @@
                                 <div class="mb-3">
                                     <label class="form-label"><strong>Birthday</strong></label>
                                     <input type="date" class="form-control" name="birthday" 
-                                    value="{{ auth()->user()->metadata->birthday ? \Carbon\Carbon::parse(auth()->user()->metadata->birthday)->format('Y-m-d') : '' }}">
+                                    value="{{ auth()->user()->metadata?->birthday ? \Carbon\Carbon::parse(auth()->user()->metadata?->birthday)->format('Y-m-d') : '' }}">
                                     @error('birthday')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -111,7 +111,7 @@
                                 <div class="mb-3">
                                     <label class="form-label"><strong>Your Avatar</strong></label>
                                     <div class="d-flex">
-                                        <img src="{{asset('storage/avatars/' . auth()->user()->metadata->avatar)}}" width="100" height="100" alt="">
+                                        <img src="{{asset('storage/avatars/' . auth()->user()->metadata?->avatar)}}" width="100" height="100" alt="">
                                         <div class="ms-3">
                                             <p><strong>Note: </strong> the avatar should note exceed 100x100 dimensions
                                                 (in pixels) and it sholud be smaller than 1 MB in file size. Accepable
@@ -129,7 +129,7 @@
                                 <div class="mb-3">
                                     <label for="yourself" class="form-label"><strong>A few sentences about
                                             yourself</strong></label>
-                                    <textarea style="height: 128px;" name="about" class="form-control">{{ auth()->user()->metadata->about }}</textarea>
+                                    <textarea style="height: 128px;" name="about" class="form-control">{{ auth()->user()->metadata?->about }}</textarea>
                                     @error('about')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -154,7 +154,7 @@
                                         <strong>Company Name</strong>
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputEmail3" name="company" value="{{ auth()->user()->metadata->company }}">
+                                        <input type="text" class="form-control" id="inputEmail3" name="company" value="{{ auth()->user()->metadata?->company }}">
                                         @error('company')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -166,7 +166,7 @@
                                     </label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="address1" id="inputEmail3"
-                                            value="{{ auth()->user()->metadata->address1 }}">
+                                            value="{{ auth()->user()->metadata?->address1 }}">
                                         @error('address1')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -177,7 +177,7 @@
                                         <strong>Address 2</strong>
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="address2" id="inputEmail3" value="{{ auth()->user()->metadata->address2 }}">
+                                        <input type="text" class="form-control" name="address2" id="inputEmail3" value="{{ auth()->user()->metadata?->address2 }}">
                                         @error('address2')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -188,7 +188,7 @@
                                         <strong>City</strong>
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputEmail3" name="city" value="{{ auth()->user()->metadata->city }}">
+                                        <input type="text" class="form-control" id="inputEmail3" name="city" value="{{ auth()->user()->metadata?->city }}">
                                         @error('city')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -199,7 +199,7 @@
                                         <strong>Country</strong>
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputEmail3" name="country" value="{{ auth()->user()->metadata->country }}">
+                                        <input type="text" class="form-control" id="inputEmail3" name="country" value="{{ auth()->user()->metadata?->country }}">
                                         @error('country')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -210,7 +210,7 @@
                                         <strong>Province</strong>
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputEmail3" name="province" value="{{ auth()->user()->metadata->province }}">
+                                        <input type="text" class="form-control" id="inputEmail3" name="province" value="{{ auth()->user()->metadata?->province }}">
                                         @error('province')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -221,7 +221,7 @@
                                         <strong>Postal Code</strong>
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputEmail3" name="postcode" value="{{ auth()->user()->metadata->postal_code }}">
+                                        <input type="text" class="form-control" id="inputEmail3" name="postcode" value="{{ auth()->user()->metadata?->postal_code }}">
                                         @error('postcode')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -232,7 +232,7 @@
                                         <strong>Telephone</strong>
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputEmail3" name="telephone" value="{{ auth()->user()->metadata->telephone }}">
+                                        <input type="text" class="form-control" id="inputEmail3" name="telephone" value="{{ auth()->user()->metadata?->telephone }}">
                                         @error('telephone')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror

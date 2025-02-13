@@ -59,7 +59,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li class="mt-2">
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <a class="dropdown-item d-flex align-items-center" href="{{route('profile.dashboard')}}">
                                         <i class="fa-solid fa-house me-2" style="width: 20px;"></i>
                                         Dashboard
                                     </a>

@@ -43,3 +43,11 @@ Route::get('/upload', [ProfileController::class, 'upload'])->name('profile.uploa
 Route::get('/purchase', [ProfileController::class, 'purchase'])->name('profile.purchase');
 Route::get('/product-report', [ProfileController::class, 'productReport'])->name('profile.productReport');
 Route::get('/sale-report', [ProfileController::class, 'saleReport'])->name('profile.saleReport');
+
+// Profile
+Route::middleware(['isLogin'])->group(function () {
+    Route::get('/setting', [ProfileController::class, 'setting'])->name('profile.setting');
+    Route::post('/setting', [ProfileController::class, 'updateProfile'])->name('profile.setting.update');
+
+    Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
+});
