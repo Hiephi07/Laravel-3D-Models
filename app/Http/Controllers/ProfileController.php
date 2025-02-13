@@ -105,4 +105,49 @@ class ProfileController extends Controller
         ]);
         
     }
+
+    public function changePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required',
+            'new_password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).+$/'
+            ],
+        ], [
+            'current_password.required' => 'Vui lòng nhập mật khẩu hiện tại.',
+            'new_password.required' => 'Vui lòng nhập mật khẩu mới.',
+            'new_password.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự.',
+            'new_password.confirmed' => 'Mật khẩu xác nhận không khớp.',
+            'new_password.regex' => 'Mật khẩu mới phải chứa ít nhất 1 chữ hoa, 1 chữ thường và 1 ký tự đặc biệt.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->with([
+                'msg' => 'Thay đổi mật khẩu không thành công!',
+                'alert-type' => 'danger'
+            ]);
+        }
+
+        $user = User::find(auth()->user()->id);
+
+        // Kiểm tra mật khẩu hiện tại
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->with([
+                'msg' => 'Mật khẩu hiện tại không chính xác!',
+                'alert-type' => 'danger'
+            ]);
+        }
+
+        // Cập nhật mật khẩu mới
+        $user->update(['password' => Hash::make($request->new_password)]);
+
+        return redirect()->back()->with([
+            'msg' => 'Mật khẩu đã được thay đổi thành công!',
+            'alert-type' => 'success'
+        ]);
+    }
 }
