@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function products() {
-        return view('frontend.product');
+        return view('frontend.product.product');
     }
 
     public function productDetail($id) {
@@ -19,6 +19,6 @@ class ProductController extends Controller
                               ->take(6)
                               ->get();
 
-        return view('frontend.product', compact('product', 'relatedProducts'));
+        return view('frontend.product.product', compact('product', 'relatedProducts'));
     }
 }

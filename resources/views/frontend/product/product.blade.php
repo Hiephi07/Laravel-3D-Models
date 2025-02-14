@@ -80,7 +80,7 @@
                             <h5 class="mb-4">Description</h5>
 
                             <!-- Additional Services -->
-                            <p>{{$product->description}}</p>
+                            <div>{!!$product->description!!}</div>
 
                             <!-- Introduction -->
                             <h6>Introduction</h6>

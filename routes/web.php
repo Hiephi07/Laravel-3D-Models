@@ -37,19 +37,20 @@ Route::get('/products/{id}', [ProductController::class, 'productDetail'])->name(
 
 Route::get('/author', [AuthorController::class, 'author']);
 
-
-// Profile
-Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('profile.dashboard');
-Route::get('/my-model', [ProfileController::class, 'myModel'])->name('profile.myModel');
-Route::get('/upload', [ProfileController::class, 'upload'])->name('profile.upload');
-Route::get('/purchase', [ProfileController::class, 'purchase'])->name('profile.purchase');
-Route::get('/product-report', [ProfileController::class, 'productReport'])->name('profile.productReport');
-Route::get('/sale-report', [ProfileController::class, 'saleReport'])->name('profile.saleReport');
-
 // Profile
 Route::middleware(['isLogin'])->group(function () {
     Route::get('/setting', [ProfileController::class, 'setting'])->name('profile.setting');
     Route::post('/setting', [ProfileController::class, 'updateProfile'])->name('profile.setting.update');
 
     Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
+
+    Route::get('/upload', [ProfileController::class, 'upload'])->name('profile.upload');
+    Route::post('/upload', [ProfileController::class, 'handleUpload'])->name('profile.upload.handle');
+
+    Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('profile.dashboard');
+    Route::get('/my-model', [ProfileController::class, 'myModel'])->name('profile.myModel');
+
+    Route::get('/purchase', [ProfileController::class, 'purchase'])->name('profile.purchase');
+    Route::get('/product-report', [ProfileController::class, 'productReport'])->name('profile.productReport');
+    Route::get('/sale-report', [ProfileController::class, 'saleReport'])->name('profile.saleReport');
 });

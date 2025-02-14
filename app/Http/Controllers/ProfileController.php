@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductMedia;
+use App\Models\ProductMediaImage;
+use App\Models\SubCategory;
+use App\Models\Tag;
 use App\Models\User;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
@@ -21,7 +31,72 @@ class ProfileController extends Controller
     }
 
     public function upload() {
-        return view('frontend.profile.publishing.upload');
+        $categories = Category::get();
+        $subCategories = SubCategory::get();
+
+        return view('frontend.profile.publishing.upload', compact('categories', 'subCategories'));
+    }
+
+    public function handleUpload(ProductStoreRequest $req)
+    {
+        DB::beginTransaction();
+
+        try {
+            // Tạo sản phẩm
+            $product = Product::create([
+                'title' => $req->title,
+                'user_id' => auth()->user()->id,
+                'type_model' => $req->type_model,
+                'description' => $req->description,
+                'price' => $req->price,
+                'category_id' => $req->category_id,
+                'license' => $req->license,
+                'status' => $req->status,
+            ]);
+
+            // Upload và lưu media
+            $productMediaUrl = $this->uploadImage($req->file('media_url'), 'products');
+            $productThumbnail = $this->uploadImage($req->file('thumbnail'), 'products');
+            $productMediaImage = $this->uploadImage($req->file('image_url'), 'products');
+
+            $productMedia = ProductMedia::create([
+                'product_id' => $product->id,
+                'media_url' => $productMediaUrl,
+                'thumbnail' => $productThumbnail
+            ]);
+
+            ProductMediaImage::create([
+                'product_media_id' => $productMedia->id,
+                'image_url' => $productMediaImage
+            ]);
+
+            // Thêm tags
+            $tags = collect($req->tags)->map(function ($tag) use ($product) {
+                return [
+                    'product_id' => $product->id,
+                    'name' => $tag,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            })->toArray();
+
+            Tag::insert($tags);
+
+            DB::commit();
+
+            return redirect()->back()->with([
+                'msg' => 'Thêm sản phẩm thành công!',
+                'alert-type' => 'success'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Lỗi khi thêm sản phẩm: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Đã xảy ra lỗi khi thêm sản phẩm.'])->with([
+                'msg' => 'Thêm sản phẩm không thành công!',
+                'alert-type' => 'danger'
+            ]);
+        }
     }
 
     public function purchase() {
@@ -40,39 +115,7 @@ class ProfileController extends Controller
         return view('frontend.profile.settings.setting');
     }
 
-    public function updateProfile(Request $req) {
-        $validator = Validator::make($req->all(), [
-            'birthday' => 'nullable|date',
-            'avatar' => 'nullable|image|max:2048', // Chỉ chấp nhận ảnh, tối đa 2MB
-            'about' => 'nullable|string|max:1000',
-            'name' => 'required|string|max:255',
-            'company' => 'nullable|string|max:255',
-            'address1' => 'nullable|string|max:255',
-            'address2' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:100',
-            'country' => 'nullable|string|max:100',
-            'postcode' => 'nullable|regex:/^\d{5,6}$/', // Định dạng mã bưu chính (5-6 số)
-            'telephone' => 'nullable|regex:/^(\+?\d{1,4})?\s?\d{6,15}$/', // Số điện thoại hợp lệ
-        ], [
-            'birthday.date' => 'Ngày sinh không hợp lệ.',
-            'avatar.image' => 'Ảnh đại diện phải là định dạng ảnh hợp lệ.',
-            'avatar.max' => 'Ảnh đại diện không được vượt quá 2MB.',
-            'about.max' => 'Thông tin giới thiệu không được quá 1000 ký tự.',
-            'name.required' => 'Tên là bắt buộc.',
-            'name.max' => 'Tên không được vượt quá 255 ký tự.',
-            'company.max' => 'Tên công ty không được vượt quá 255 ký tự.',
-            'address1.max' => 'Địa chỉ 1 không được vượt quá 255 ký tự.',
-            'address2.max' => 'Địa chỉ 2 không được vượt quá 255 ký tự.',
-            'city.max' => 'Tên thành phố không được vượt quá 100 ký tự.',
-            'country.max' => 'Tên quốc gia không được vượt quá 100 ký tự.',
-            'postcode.regex' => 'Mã bưu chính không hợp lệ.',
-            'telephone.regex' => 'Số điện thoại không hợp lệ.',
-        ]);
-        
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        
+    public function updateProfile(ProfileUpdateRequest $req) {
         $user = User::find(auth()->user()->id);
 
         // Sử dụng Trait để xử lý ảnh
