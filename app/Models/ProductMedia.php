@@ -20,4 +20,8 @@ class ProductMedia extends Model
     public function product() {
         return $this->belongsTo(Product::class);
     }
+
+    public function productMediaImages() {
+        return $this->hasMany(ProductMediaImage::class);
+    }
 }

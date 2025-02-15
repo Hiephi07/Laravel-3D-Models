@@ -31,7 +31,7 @@ class ProductStoreRequest extends FormRequest
             'license'     => 'required|string|in:free,fee',
             'status'      => 'required|string|in:Draft,Publish',
             'thumbnail'   => 'required|file|mimes:jpg,jpeg,png|max:10240',
-            'media_url'   => 'nullable|file|mimes:mp4,mov,avi|max:51200',
+            'media_url'   => 'nullable|file|mimes:zip,rar,7z|max:51200',
             'image_url'   => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
         ];
     }
@@ -49,7 +49,7 @@ class ProductStoreRequest extends FormRequest
             'status.required'      => 'Trạng thái không hợp lệ.',
             'thumbnail.required'   => 'Ảnh thumbnail không được để trống',
             'thumbnail.mimes'      => 'Ảnh thumbnail chỉ chấp nhận các định dạng jpg, jpeg, png.',
-            'media_url.mimes'      => 'File media chỉ chấp nhận các định dạng mp4, mov, avi.',
+            'media_url.mimes'      => 'File media chỉ chấp nhận các định dạng zip,rar,7z.',
             'image_url.mimes'      => 'Ảnh chỉ chấp nhận các định dạng jpg, jpeg, png.',
             'thumbnail.max'        => 'Ảnh thumbnail không được lớn hơn 10MB.',
             'media_url.max'        => 'File media không được lớn hơn 50MB.',

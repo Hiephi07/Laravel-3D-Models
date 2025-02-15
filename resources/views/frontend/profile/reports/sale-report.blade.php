@@ -21,9 +21,9 @@
         <!-- Sidebar -->
         <div class="col-md-2 sidebar text-white p-0" style="height: auto; background-color: #293541;">
             <div class="d-flex flex-column align-items-center my-5">
-                <img src="{{asset('assets/img/100.png')}}" class="rounded-circle" alt="Creator Avatar">
+                <img src="{{asset('storage/avatars/' . auth()->user()->metadata?->avatar)}}" width="100" height="100" class="rounded-circle" alt="Creator Avatar">
                 <div>
-                    <h5 class="my-3 text-center">GAN Studio</h5>
+                    <h5 class="my-3 text-center">{{auth()->user()->name}}</h5>
                 </div>
             </div>
 

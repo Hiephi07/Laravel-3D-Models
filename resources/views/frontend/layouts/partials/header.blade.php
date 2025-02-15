@@ -26,7 +26,7 @@
                     </div>
                     @else 
                     <div class="">
-                        <button class="btn btn-outline-primary">Upload model</button>
+                        <a href="{{route('profile.upload')}}" class="btn btn-outline-primary">Upload model</a>
                         <a href="#" class="icon-link ms-3">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="badge">0</span>

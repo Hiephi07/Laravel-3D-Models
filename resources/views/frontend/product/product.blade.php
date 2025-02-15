@@ -12,8 +12,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">3D Models</a></li>
-                    <li class="breadcrumb-item"><a href="#">Furniture</a></li>
-                    <li class="breadcrumb-item"><a href="#">Chair</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{$product->category->name}}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{$product->title}}</li>
                 </ol>
             </nav>
@@ -26,14 +25,12 @@
                             <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
                                 height="640px" class="d-block w-100" alt="...">
                         </div>
+                        @foreach ($product->productMedia->productMediaImages as $item)
                         <div class="carousel-item">
-                            <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
+                            <img src="{{asset('storage/products/'. $item->image_url)}}"
                                 class="d-block w-100" alt="...">
                         </div>
-                        <div class="carousel-item">
-                            <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
-                                class="d-block w-100" alt="...">
-                        </div>
+                        @endforeach
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
                         data-bs-slide="prev">
@@ -52,10 +49,11 @@
                     <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
                         alt="Thumbnail 1" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
                         class="thumbnail active-thumbnail">
-                    <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
+                    @foreach ($product->productMedia->productMediaImages as $item)
+                    <img src="{{asset('storage/products/'. $item->image_url)}}"
                         alt="Thumbnail 2" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" class="thumbnail">
-                    <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
-                        alt="Thumbnail 3" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" class="thumbnail">
+                    @endforeach
+                    
                 </div>
 
                 <!-- Tabs Section -->
@@ -83,7 +81,7 @@
                             <div>{!!$product->description!!}</div>
 
                             <!-- Introduction -->
-                            <h6>Introduction</h6>
+                            {{-- <h6>Introduction</h6>
                             <p>
                                 This is a high-quality coracias caudatus model with high-quality 4K maps, fur, riggings, and
                                 5 realistic animations.
@@ -110,7 +108,7 @@
                             <p>There is a Blender project and an Fbx file without rigging or animation.</p>
 
                             <!-- Show More -->
-                            <p class="show-more">Show more ▼</p>
+                            <p class="show-more">Show more ▼</p> --}}
 
                         </div>
                         <div class="tab-pane fade" id="comments" role="tabpanel">User comments...</div>
@@ -126,36 +124,10 @@
                                     render
                                 </button> -->
 
-
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">render</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">pillow</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">furniture</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">chair</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">interior</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">modern</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">seat</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">design</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">sofa</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">living</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">room</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">modern chair</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">casa</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm fs-6"
-                                style="padding: 2px 4px;">comfort</button>
-
+                            
+                            @foreach ($product->tags as $tag)
+                                <button type="button" class="btn btn-outline-secondary btn-sm fs-6" style="padding: 2px 4px;">{{$tag->name}}</button>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -165,7 +137,9 @@
             <div class="col-md-3">
                 <div class="border p-3 mb-3">
                     <h4>{{$product->title}}</h4>
-                    <p class="text-success h4 my-4">${{$product->price}} <del class="text-muted">$100</del></p>
+                    <p class="text-success h4 my-4">${{$product->price}}
+                        {{-- <del class="text-muted">$100</del> --}}
+                    </p>
                     <button class="btn btn-warning btn-lg w-100 my-3">Add to Cart</button>
                 </div>
 

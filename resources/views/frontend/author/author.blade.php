@@ -10,9 +10,9 @@
                 <div class="info-card">
                     <!-- Creator Information -->
                     <div class="d-flex flex-column align-items-center">
-                        <img src="{{asset('assets/img/100.png')}}" class="rounded-circle" alt="Creator Avatar">
+                        <img src="{{asset('storage/avatars/' . auth()->user()->metadata?->avatar)}}" width="100" height="100" class="rounded-circle" alt="Creator Avatar">
                         <div>
-                            <h5 class="my-3 text-center">GAN Studio</h5>
+                            <h5 class="my-3 text-center">{{auth()->user()->name}}</h5>
                         </div>
                     </div>
                     <button class="btn btn-outline-primary btn-sm mb-3 w-100">Contact</button>

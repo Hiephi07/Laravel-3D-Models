@@ -19,60 +19,14 @@
     <nav class="category-nav container">
         <div class="container-fluid">
             <div class="row flex-nowrap overflow-auto justify-content-between">
+                @foreach ($newCategories as $category)
                 <div class="col-auto">
                     <a href="{{route('catalog')}}" class="category-item">
-                        <i class="fas fa-car"></i>
-                        <span>Car</span>
+                        <i class="{{$category->icon}}"></i>
+                        <span>{{$category->name}}</span>
                     </a>
                 </div>
-                <div class="col-auto">
-                    <a href="{{route('catalog')}}" class="category-item">
-                        <i class="fa-solid fa-person"></i>
-                        <span>Character</span>
-                    </a>
-                </div>
-                <div class="col-auto">
-                    <a href="{{route('catalog')}}" class="category-item">
-                        <i class="fa-solid fa-utensils"></i>
-                        <span>Food</span>
-                    </a>
-                </div>
-                <div class="col-auto">
-                    <a href="{{route('catalog')}}" class="category-item">
-                        <i class="fa-solid fa-bed"></i>
-                        <span>Furniture</span>
-                    </a>
-                </div>
-                <div class="col-auto">
-                    <a href="{{route('catalog')}}" class="category-item">
-                        <i class="fa-solid fa-bath"></i>
-                        <span>Household</span>
-                    </a>
-                </div>
-                <div class="col-auto">
-                    <a href="{{route('catalog')}}" class="category-item">
-                        <i class="fa-solid fa-leaf"></i>
-                        <span>Flant</span>
-                    </a>
-                </div>
-                <div class="col-auto">
-                    <a href="{{route('catalog')}}" class="category-item">
-                        <i class="fa-solid fa-shuttle-space"></i>
-                        <span>Space</span>
-                    </a>
-                </div>
-                <div class="col-auto">
-                    <a href="{{route('catalog')}}" class="category-item">
-                        <i class="fa-solid fa-truck"></i>
-                        <span>Vehicle</span>
-                    </a>
-                </div>
-                <div class="col-auto">
-                    <a href="{{route('catalog')}}" class="category-item">
-                        <i class="fa-solid fa-ship"></i>
-                        <span>Watercraft</span>
-                    </a>
-                </div>
+                @endforeach
             </div>
         </div>
     </nav>
@@ -135,7 +89,7 @@
             @foreach ($newProducts as $product)
             <div class="col-6 col-md-4 col-lg-2">
                 <div class="model-card">
-                    <img src="{{asset('storage/products/' . $product->productMedia->thumbnail)}}"
+                    <img style="object-fit: cover" src="{{asset('storage/products/' . $product->productMedia->thumbnail)}}"
                         alt="3D Model">
                     <div class="card-info">
                         <p>
