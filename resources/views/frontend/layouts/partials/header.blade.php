@@ -27,9 +27,19 @@
                     @else 
                     <div class="">
                         <a href="{{route('profile.upload')}}" class="btn btn-outline-primary">Upload model</a>
-                        <a href="#" class="icon-link ms-3">
+                        <a href="/cart" class="icon-link ms-3">
                             <i class="fas fa-shopping-cart"></i>
-                            <span class="badge">0</span>
+                            @php
+                            $user = Auth::user();
+                            $cart = $user->cart;
+
+                            if (!$cart) {
+                                return $items = 0;
+                            }
+
+                            $items = $cart->items->count();
+                            @endphp
+                            <span class="badge">{{ $items ?? 0}}</span>
                         </a>
                     </div>
                     @endif
@@ -40,7 +50,7 @@
                 <div class="d-flex align-items-center gap-4">
 
                     <div class="header-icons">
-                        <a href="#" class="icon-link">
+                        <a href="{{route('wish-list.index')}}" class="icon-link">
                             <i class="far fa-heart"></i>
                             <!-- <span class="badge">0</span> -->
                         </a>

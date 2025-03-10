@@ -88,22 +88,24 @@
             <!-- 12 model cards as shown in the image -->
             @foreach ($newProducts as $product)
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="model-card">
-                    <img style="object-fit: cover" src="{{asset('storage/products/' . $product->productMedia->thumbnail)}}"
-                        alt="3D Model">
-                    <div class="card-info">
-                        <p>
-                            <strong><a class="text-decoration-none text-white" href="{{route('products.detail', $product->id)}}">{{$product->title}}</a></strong>
-                        </p>
-                        <p>
-                            <i class="fa-regular fa-comment"></i>
-                            45
+                <a href="{{ route('products.detail', $product->id) }}" class="d-block text-decoration-none">
+                    <div class="model-card">
+                        <img style="object-fit: cover" src="{{asset('storage/products/' . $product->productMedia->thumbnail)}}"
+                            alt="3D Model">
+                        <div class="card-info">
+                            <p>
+                                <strong><a class="text-decoration-none text-white" href="{{route('products.detail', $product->id)}}">{{$product->title}}</a></strong>
+                            </p>
+                            <p>
+                                <i class="fa-regular fa-comment"></i>
+                                45
 
-                            <i class="fa-regular fa-thumbs-up"></i>
-                            120
-                        </p>
+                                <i class="fa-regular fa-thumbs-up"></i>
+                                120
+                            </p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             @endforeach
             

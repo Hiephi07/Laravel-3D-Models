@@ -1,12 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AuthorController;
-use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WishListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +39,7 @@ Route::get('/products', [ProductController::class, 'products'])->name('products'
 
 Route::get('/products/{id}', [ProductController::class, 'productDetail'])->name('products.detail');
 
-Route::get('/author', [AuthorController::class, 'author']);
+Route::get('/author/{id}', [AuthorController::class, 'author'])->name('author');
 
 // Profile
 Route::middleware(['isLogin'])->group(function () {
@@ -53,4 +57,16 @@ Route::middleware(['isLogin'])->group(function () {
     Route::get('/purchase', [ProfileController::class, 'purchase'])->name('profile.purchase');
     Route::get('/product-report', [ProfileController::class, 'productReport'])->name('profile.productReport');
     Route::get('/sale-report', [ProfileController::class, 'saleReport'])->name('profile.saleReport');
+
+    Route::get('/cart', [CartController::class, 'cartList'])->name('cart.list');
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
+
+    Route::post('paypal/payment', [PayPalController::class, 'createPayment'])->name('paypal.payment');
+    Route::get('paypal/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.success');
+    Route::get('paypal/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.cancel');
+
+    Route::resource('wish-list', WishListController::class);
+
+    Route::get('/admin', [AdminController::class, 'index']);
 });

@@ -140,7 +140,11 @@
                     <p class="text-success h4 my-4">${{$product->price}}
                         {{-- <del class="text-muted">$100</del> --}}
                     </p>
-                    <button class="btn btn-warning btn-lg w-100 my-3">Add to Cart</button>
+                    <form action="{{ route('cart.add') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <button type="submit" class="btn btn-warning btn-lg w-100 my-3">Add to Cart</button>
+                    </form>
                 </div>
 
                 <div class="border p-3 mb-3">
@@ -154,7 +158,7 @@
                                 <small class="text-muted">Contributor Since 2016</small>
                             </div>
                         </div>
-                        <button class="btn btn-outline-primary btn-sm mb-3 w-100">Contact</button>
+                        <a class="btn btn-outline-primary btn-sm mb-3 w-100" href="{{ route('author', $product->user_id) }}">Contact</a>
                     </div>
                 </div>
 
@@ -196,11 +200,11 @@
                         <tbody>
                             <tr>
                                 <td>Publish Date</td>
-                                <td>2023-10-21</td>
+                                <td>{{ date('Y-m-d', strtotime($product->created_at)) }}</td>
                             </tr>
                             <tr>
                                 <td>Model ID</td>
-                                <td>#4851725</td>
+                                <td>#{{ $product->id }}</td>
                             </tr>
                             <tr>
                                 <td>Animated</td>
@@ -253,25 +257,37 @@
                 @foreach ($relatedProducts as $product)
                 <div class="col-md-2 mb-3">
                     <div class="product-card">
-                        <div class="product-image m-4 position-relative">
-                            <img src="{{asset('storage/products/'. $product->productMedia->thumbnail)}}"
-                                class="w-100" alt="Curtain">
-                            <div class="badge text-bg-secondary" style="border-radius: 20%;">${{$product->price}}</div>
-                            <div class="product-actions">
-                                <button class="btn btn-icon">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="btn btn-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
+                        <a href="{{ route('products.detail', $product->id) }}" class="d-block text-decoration-none">
+                            <div class="product-image m-4 position-relative">
+                                <img src="{{ asset('storage/products/'. $product->productMedia->thumbnail) }}"
+                                    class="w-100" alt="Curtain">
+                                <div class="badge text-bg-secondary" style="border-radius: 20%;">${{ $product->price}}</div>
+                                <div class="product-actions">
+                                    <!-- Form POST cho wish-list -->
+                                    <form action="{{ route('wish-list.create', $product->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-link p-0">
+                                            <input type="hidden" name="product_id" value="$product->id">
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                    </form>
+                                    <!-- Form POST cho thêm vào giỏ hàng -->
+                                    <form action="{{ route('cart.add') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-link p-0">
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info p-2">
-                            <h3 class="product-title h6 mb-1"><a class="text-decoration-none text-black" href="{{route('products.detail', $product->id)}}">{{$product->title}}</a></h3>
-                            <div class="product-meta text-muted small">
-                                3DS MAX [+2]
+                            <div class="product-info p-2">
+                                <h3 class="product-title h6 mb-1">Curtain</h3>
+                                <div class="product-meta text-muted small">
+                                    3DS MAX [+2]
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 @endforeach

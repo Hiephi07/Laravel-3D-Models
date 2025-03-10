@@ -27,7 +27,8 @@ class ProfileController extends Controller
     }
 
     public function myModel() {
-        return view('frontend.profile.my-models.my-model');
+        $products = Product::where('user_id', auth()->user()->id)->with('category')->latest()->paginate(10);
+        return view('frontend.profile.my-models.my-model', compact('products'));
     }
 
     public function upload() {

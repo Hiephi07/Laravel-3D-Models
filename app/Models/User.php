@@ -26,4 +26,14 @@ class User extends Authenticatable
     public function metadata() {
         return $this->hasOne(Metadata::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
 }
