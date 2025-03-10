@@ -10,7 +10,7 @@ use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WishListController;
+use App\Http\Controllers\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +66,10 @@ Route::middleware(['isLogin'])->group(function () {
     Route::get('paypal/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.success');
     Route::get('paypal/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.cancel');
 
-    Route::resource('wish-list', WishListController::class);
+    // Route::resource('wish-list', WishListController::class);
+    Route::get('/wish-list', [WishlistController::class, 'index'])->name('wish-list.index');
+    Route::post('/wish-list/{productId}', [WishlistController::class, 'create'])->name('wish-list.create');
+    Route::delete('/wish-list/{productId}', [WishlistController::class, 'destroy'])->name('wish-list.destroy');
 
     Route::get('/admin', [AdminController::class, 'index']);
 });

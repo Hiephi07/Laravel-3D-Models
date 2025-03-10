@@ -35,4 +35,10 @@ class Product extends Model
     public function category() {
         return $this->belongsTo(Category::class);
     }
+
+    // Mối quan hệ với Wishlist
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
 }

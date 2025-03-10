@@ -272,10 +272,9 @@
                                         </button>
                                     </form>
                                     <!-- Form POST cho thêm vào giỏ hàng -->
-                                    <form action="{{ route('cart.add') }}" method="POST">
+                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-link p-0">
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
                                             <i class="fas fa-shopping-cart"></i>
                                         </button>
                                     </form>

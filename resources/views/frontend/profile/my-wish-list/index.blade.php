@@ -8,7 +8,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">CGTrue</a></li>
                     <li class="breadcrumb-item"><a href="#">Profile</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Model Upload</li>
+                    <li class="breadcrumb-item active" aria-current="page">My Wish List</li>
                 </ol>
             </nav>
 
@@ -96,17 +96,18 @@
                     </div>
                     <div class="row g-4">
                         <!-- Product Card -->
+                        @foreach ($wishlists as $wishlist)
                         <div class="col-md-2">
                             <div class="card">
-                                <img src="https://storage.googleapis.com/a1aa/image/sTiEFxBQ8b0ainDwq9oFUConT5HgNIxiqsSxqgXpChc.jpg" class="card-img-top" alt="...">
+                                <img src="{{ asset('storage/products/'. $wishlist->product->productMedia->thumbnail) }}" class="card-img-top" alt="{{ $wishlist->product->title }}">
                                 <div class="card-body text-start p-2">
-                                    <h6 class="card-title">$5.40
+                                    <h6 class="card-title text-danger">{{ $wishlist->product->price }}
                                         <span>
                                             <del class="text-secondary">$9.00</del>
-                                            <span class="text-small" style="font-size: 12px">-40%</span>
+                                            <span class="text-small text-danger" style="font-size: 12px">-40%</span>
                                         </span>
                                     </h6>
-                                    <p class="card-text">Chair, table, desk, etc.</p>
+                                    <p class="card-text text-truncate">{{ $wishlist->product->title }}</p>
                                     <div class="d-flex align-items-center justify-content-evenly">
                                         <div class="">
                                             <i class="fa-solid fa-less-than"></i>
@@ -120,6 +121,8 @@
                                 </div>
                             </div>
                         </div>
+                        @endforeach
+
                         
                         <!-- Repeat Product Card 11 more times -->
                         <!-- You can copy the above block for additional product cards -->
